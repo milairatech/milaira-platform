@@ -1,182 +1,143 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
-
-import {
-  FiType,
-  FiFileText,
-  FiHash,
-  FiImage,
-  FiFile,
-} from "react-icons/fi";
+import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 function Navbar() {
-  const [search, setSearch] = useState("");
-
-  const navigate = useNavigate();
-
-  const tools = [
-    {
-      name: "Character Counter",
-      path: "/character-counter",
-      icon: <FiType />,
-    },
-    {
-      name: "Word Counter",
-      path: "#",
-      icon: <FiFileText />,
-    },
-    {
-      name: "Hashtag Generator",
-      path: "#",
-      icon: <FiHash />,
-    },
-    {
-      name: "Image Compressor",
-      path: "#",
-      icon: <FiImage />,
-    },
-    {
-      name: "PDF Compressor",
-      path: "#",
-      icon: <FiFile />,
-    },
-  ];
-
-  const filteredTools = tools.filter((tool) =>
-    tool.name
-      .toLowerCase()
-      .includes(search.toLowerCase())
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(
+    window.innerWidth <= 768
   );
 
-  const handleToolClick = (tool) => {
-    setSearch("");
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
 
-    if (tool.path === "#") {
-      alert("Coming Soon 🚀");
-      return;
-    }
+    window.addEventListener("resize", handleResize);
 
-    navigate(tool.path);
-  };
+    return () =>
+      window.removeEventListener(
+        "resize",
+        handleResize
+      );
+  }, []);
 
   return (
-    <nav
-      style={{
-        height: "70px",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: "0 40px",
-        borderBottom: "1px solid #1f2937",
-        background: "#020617",
-        position: "relative",
-      }}
-    >
-      <Link
-        to="/"
+    <>
+      <nav
         style={{
-          textDecoration: "none",
-          fontSize: "28px",
-          fontWeight: "800",
-          background:
-            "linear-gradient(90deg,#ffffff,#60a5fa)",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent",
-        }}
-      >
-        MILAIRA
-      </Link>
-
-      <div
-        style={{
-          position: "relative",
-        }}
-      >
-        <input
-          type="text"
-          placeholder="Search tools..."
-          value={search}
-          onChange={(e) =>
-            setSearch(e.target.value)
-          }
-          style={{
-            width: "280px",
-            padding: "10px 14px",
-            borderRadius: "10px",
-            border: "1px solid #334155",
-            background: "#111827",
-            color: "white",
-            outline: "none",
-            fontSize: "14px",
-          }}
-        />
-
-        {search &&
-          filteredTools.length > 0 && (
-            <div
-              style={{
-                position: "absolute",
-                top: "46px",
-                left: 0,
-                width: "100%",
-                background: "#111827",
-                border: "1px solid #1f2937",
-                borderRadius: "10px",
-                overflow: "hidden",
-                zIndex: 9999,
-                boxShadow:
-                  "0 10px 30px rgba(0,0,0,0.4)",
-              }}
-            >
-              {filteredTools.map((tool) => (
-                <div
-                  key={tool.name}
-                  onClick={() =>
-                    handleToolClick(tool)
-                  }
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "12px",
-                    padding: "14px",
-                    cursor: "pointer",
-                    color: "white",
-                    borderBottom:
-                      "1px solid #1f2937",
-                  }}
-                >
-                  {tool.icon}
-
-                  <span>
-                    {tool.name}
-                  </span>
-                </div>
-              ))}
-            </div>
-          )}
-      </div>
-
-      <div
-        style={{
+          minHeight: "70px",
           display: "flex",
-          gap: "25px",
+          justifyContent: "space-between",
+          alignItems: "center",
+          padding: "15px 20px",
+          borderBottom: "1px solid #1f2937",
+          background: "#020617",
+          position: "sticky",
+          top: 0,
+          zIndex: 1000,
         }}
       >
         <Link
-          to="/tools"
-          style={navLinkStyle}
+          to="/"
+          style={{
+            textDecoration: "none",
+            fontSize: "28px",
+            fontWeight: "800",
+            background:
+              "linear-gradient(90deg,#ffffff,#60a5fa)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+          }}
         >
-          Tools
+          MILAIRA
         </Link>
 
-        <Link
-          to="/about"
-          style={navLinkStyle}
+        {!isMobile && (
+          <div
+            style={{
+              display: "flex",
+              gap: "25px",
+              alignItems: "center",
+            }}
+          >
+            <Link
+              to="/tools"
+              style={navLinkStyle}
+            >
+              Tools
+            </Link>
+
+            <Link
+              to="/about"
+              style={navLinkStyle}
+            >
+              About
+            </Link>
+          </div>
+        )}
+
+        {isMobile && (
+          <button
+            onClick={() =>
+              setMenuOpen(!menuOpen)
+            }
+            style={{
+              background: "none",
+              border: "none",
+              color: "white",
+              fontSize: "28px",
+              cursor: "pointer",
+            }}
+          >
+            ☰
+          </button>
+        )}
+      </nav>
+
+      {isMobile && menuOpen && (
+        <div
+          style={{
+            background: "#0f172a",
+            borderBottom:
+              "1px solid #1f2937",
+            padding: "15px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "15px",
+          }}
         >
-          About
-        </Link>
-      </div>
-    </nav>
+          <Link
+            to="/"
+            style={mobileLink}
+            onClick={() =>
+              setMenuOpen(false)
+            }
+          >
+            Home
+          </Link>
+
+          <Link
+            to="/tools"
+            style={mobileLink}
+            onClick={() =>
+              setMenuOpen(false)
+            }
+          >
+            Tools
+          </Link>
+
+          <Link
+            to="/about"
+            style={mobileLink}
+            onClick={() =>
+              setMenuOpen(false)
+            }
+          >
+            About
+          </Link>
+        </div>
+      )}
+    </>
   );
 }
 
@@ -185,6 +146,12 @@ const navLinkStyle = {
   color: "#cbd5e1",
   fontSize: "16px",
   fontWeight: "600",
+};
+
+const mobileLink = {
+  textDecoration: "none",
+  color: "white",
+  fontSize: "16px",
 };
 
 export default Navbar;
