@@ -1,4 +1,5 @@
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import ToolCard from "../components/ToolCard";
 import { useNavigate } from "react-router-dom";
 
@@ -15,53 +16,55 @@ function Home() {
   const navigate = useNavigate();
 
   return (
-    <div>
+    <>
       <Navbar />
 
-      <section
+      <main
         style={{
-          minHeight: "calc(100vh - 80px)",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+          maxWidth: "1200px",
+          margin: "0 auto",
           padding: "40px 20px",
-          textAlign: "center",
         }}
       >
-        <h1
+        <section
           style={{
-            fontSize: "clamp(42px, 10vw, 64px)",
-            fontWeight: "800",
-            marginBottom: "10px",
-            background:
-              "linear-gradient(90deg,#ffffff,#60a5fa)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
+            textAlign: "center",
+            marginBottom: "50px",
           }}
         >
-          MILAIRA
-        </h1>
+          <h1
+            style={{
+              fontSize: "clamp(48px, 8vw, 72px)",
+              fontWeight: "800",
+              marginBottom: "12px",
+              background:
+                "linear-gradient(90deg,#ffffff,#60a5fa)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
+            MILAIRA
+          </h1>
 
-        <p
-          style={{
-            color: "#94a3b8",
-            fontSize: "clamp(14px,4vw,18px)",
-            marginBottom: "40px",
-            maxWidth: "700px",
-            lineHeight: "1.6",
-          }}
-        >
-          Fast, simple and privacy-first productivity tools.
-        </p>
+          <p
+            style={{
+              color: "#94a3b8",
+              fontSize: "clamp(16px,3vw,20px)",
+              maxWidth: "700px",
+              margin: "0 auto",
+              lineHeight: "1.6",
+            }}
+          >
+            Fast, simple and privacy-first productivity tools.
+          </p>
+        </section>
 
-        <div
+        <section
           style={{
             display: "grid",
             gridTemplateColumns:
-              "repeat(auto-fit, minmax(280px, 1fr))",
-            gap: "20px",
-            maxWidth: "1100px",
-            width: "100%",
+              "repeat(auto-fit, minmax(300px, 1fr))",
+            gap: "24px",
           }}
         >
           <ToolCard
@@ -117,9 +120,11 @@ function Home() {
               navigate("/tools")
             }
           />
-        </div>
-      </section>
-    </div>
+        </section>
+      </main>
+
+      <Footer />
+    </>
   );
 }
 
