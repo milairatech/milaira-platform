@@ -94,14 +94,12 @@ function Home() {
             }
           />
 
-          <ToolCard
-            icon={<FiImage />}
-            title="Image Compressor"
-            description="Smart image optimization for faster websites and applications."
-            onClick={() =>
-              alert("Coming Soon")
-            }
-          />
+         <ToolCard
+  icon={<FiImage />}
+  title="Image Toolkit"
+  description="Compress, resize, convert and optimize images instantly."
+  onClick={() => navigate("/image-compressor")}
+/>
 
           <ToolCard
             icon={<FiFile />}
