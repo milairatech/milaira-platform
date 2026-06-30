@@ -224,7 +224,6 @@ function ImageCompressor() {
   ) : (
     <div className="empty-preview">
       <div className="upload-big-icon">
-        📷
       </div>
 
       <h3>Upload your image</h3>
